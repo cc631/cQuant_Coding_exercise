@@ -115,7 +115,22 @@ for(i in unique(histo_price$SettlementPoint)) {
 #library(xts)
 #library(zoo)
 
-
 ###############  Bonus - Mean Plot  #################
 
 # Generate two line plots that display the monthly average prices you computed in Task 2 in chronological order
+
+histo_monthly_price_plot <-  histo_price %>%
+  na.omit() %>%
+  group_by(SettlementPoint,Time = floor_date(timestamp,unit="month")) %>%
+  summarize(AveragePrice = mean(Price, na.rm = TRUE))
+
+histo_monthly_price_plot$cat <- substr(histo_monthly_price_plot$SettlementPoint, 1,2)
+
+##not completed
+ggplot(histo_monthly_price_plot, aes(x=Time, y=AveragePrice)) +
+  geom_line(color="blue") +
+  ylab("mean price") +
+  geom_line(subset(histo_monthly_price_plot,cat == "HB"), aes(y=AveragePrice, col="HB"))+
+  geom_line(subset(histo_monthly_price_plot,cat == "LZ"), aes(y=AveragePrice, col="lZ"))
+  theme(legend.position = "right")
+
