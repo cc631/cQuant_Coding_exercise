@@ -70,11 +70,52 @@ write_csv(max_volatility, file = "./output/MaxVolatilityByYear.csv")
 
 
 ###############  Task 7  #################
+# Data Translation and Formatting
+
+for(i in unique(histo_price$SettlementPoint)) {
+  SP_df_test <- subset(histo_price, SettlementPoint == i)
+  SP_df_test %>% rename(Variable = SettlementPoint)
+  str(SP_df_test)
+  SP_df_matrix <- SP_df_test %>%
+    mutate(Date = as.character(Date)) %>%
+    mutate(Date = substr(Date,1,10)) %>%
+    mutate(myHour = hour(timestamp))
+  hourstats <- SP_df_matrix%>%
+    na.omit() %>%
+    group_by(Date)%>%
+    summarise(X1 = Price[myHour == 0],
+              X2 = Price[myHour == 1],
+              X3 = Price[myHour == 2],
+              X4 = Price[myHour == 3],
+              X5 = Price[myHour == 4],
+              X6 = Price[myHour == 5],
+              X7 = Price[myHour == 6],
+              X8 = Price[myHour == 7],
+              X9 = Price[myHour == 8],
+              X10 = Price[myHour == 9],
+              X11 = Price[myHour == 10],
+              X12 = Price[myHour == 11],
+              X13 = Price[myHour == 12],
+              X14 = Price[myHour == 13],
+              X15 = Price[myHour == 14],
+              X16 = Price[myHour == 15],
+              X17 = Price[myHour == 16],
+              X18 = Price[myHour == 17],
+              X19 = Price[myHour == 18],
+              X20 = Price[myHour == 19],
+              X21 = Price[myHour == 20],
+              X22 = Price[myHour == 21],
+              X23 = Price[myHour == 22],
+              X24 = Price[myHour == 23])
+  hourstats$Variable = i
+  write.csv(hourstats,file = paste0("./formattedSpotHistory/spot_",i,".csv"))
+}
 
 
+#library(xts)
+#library(zoo)
 
 
+###############  Bonus - Mean Plot  #################
 
-
-
-
+# Generate two line plots that display the monthly average prices you computed in Task 2 in chronological order
