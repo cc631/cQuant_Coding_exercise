@@ -127,10 +127,10 @@ histo_monthly_price_plot <-  histo_price %>%
 histo_monthly_price_plot$cat <- substr(histo_monthly_price_plot$SettlementPoint, 1,2)
 
 ##not completed
-ggplot(histo_monthly_price_plot, aes(x=Time, y=AveragePrice)) +
+ggplot() +
   geom_line(color="blue") +
   ylab("mean price") +
-  geom_line(subset(histo_monthly_price_plot,cat == "HB"), aes(y=AveragePrice, col="HB"))+
-  geom_line(subset(histo_monthly_price_plot,cat == "LZ"), aes(y=AveragePrice, col="lZ"))
+  geom_line(data = subset(histo_monthly_price_plot,cat == "HB"), aes(x=Time,y=AveragePrice, col="HB"))+
+  geom_line(data = subset(histo_monthly_price_plot,cat == "LZ"), aes(x=Time,y=AveragePrice, col="lZ"))+
   theme(legend.position = "right")
 
