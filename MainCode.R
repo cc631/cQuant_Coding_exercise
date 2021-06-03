@@ -56,6 +56,25 @@ histo_price_volatility <-  histo_price_hub %>%
   summarize(HourlyVolatility = sd(Price, na.rm = TRUE))
 
 ###############  Task 5  #################
+# Write the data frame as csv
+write_csv(histo_price_volatility, file = "./output/HourlyVolatilityByYear.csv")
+
+###############  Task 6  #################
+# Determine which settlement hub showed the highest overall hourly volatility for each historical year.
+max_volatility <-  histo_price_volatility %>%
+  group_by(Year) %>% 
+  top_n(1, HourlyVolatility)
+
+# Write the data frame as csv
+write_csv(max_volatility, file = "./output/MaxVolatilityByYear.csv")
+
+
+###############  Task 7  #################
+
+
+
+
+
 
 
 
