@@ -126,7 +126,7 @@ histo_monthly_price_plot <-  histo_price %>%
 
 histo_monthly_price_plot$cat <- substr(histo_monthly_price_plot$SettlementPoint, 1,2)
 
-##not completed
+
 ggplot() +
   geom_line(color="blue") +
   ylab("mean price") +
